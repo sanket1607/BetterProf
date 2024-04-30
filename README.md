@@ -1,1 +1,1 @@
-# insightHub
+# BetterProf
