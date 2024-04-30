@@ -1,0 +1,32 @@
+type Query{
+    getAvailableCohortTerms: [String],
+
+    getNormalisedStudentMean(
+        cohort: [String]
+        gradeFlag: [GradeFlag]! = [BMA, CPB],
+        isURG: [Boolean]! = [true, false],
+        isFirstGen: [Boolean]! = [true, false]
+        mentalHealthRange: [Float]! = [-1, 1]
+    ): NormalisedStudent
+}
+
+type NormalisedStudent{
+    grade: Float!
+    gradeFlag: Float!
+    isURG: Float!
+    isFirstGen: Float!
+    mentalHealth: Float!
+    passingSatisfaction: Float!
+    mathBackground: Float!
+    senseOfBelonging: Float!
+    hasConsideredLeavingCS: Float!
+    codingExperience: Float!
+    passingConfidence: Float!
+    hasRoleModels: Float!
+    hangsOutWithCSClassmates: Float!
+}
+
+enum GradeFlag{
+    BMA,
+    CPB
+}
