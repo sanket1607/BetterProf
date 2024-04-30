@@ -1,0 +1,17 @@
+version: '3'
+services:
+
+  spt-postgres:
+    image: "postgres:latest"
+    platform: linux/amd64
+    container_name: spt-postgres
+    volumes:
+      - spt-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=spt
+      - POSTGRES_USER=spt
+      - POSTGRES_PASSWORD=spt
+volumes:
+  spt-data:
