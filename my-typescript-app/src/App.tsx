@@ -6,6 +6,7 @@ import { RadarChart } from "./RadarChart";
 function App() {
   return (
     <div className="App">
+      <img src="uci.png" alt="My Image"/>
       Pep
       <RadarChart />
     </div>
