@@ -14,6 +14,16 @@ const App: React.FC = () => {
     2: [],
     3: [],
   });
+  const [selectedCourses, setSelectedCourses] = useState<{ [key: number]: string[] }>({
+    1: [],
+    2: [],
+    3: [],
+  });
+  const [selectedStudentIds, setSelectedStudentIds] = useState<{ [key: number]: string[] }>({
+    1: [],
+    2: [],
+    3: [],
+  });
 
   const [isGenerateGraphEnabled, setIsGenerateGraphEnabled] = useState<boolean>(false);
 
@@ -21,21 +31,17 @@ const App: React.FC = () => {
     setIsDialogOpen({ ...isDialogOpen, [group]: true });
   };
 
-  const handleDialogClose = (options: string[], group: number) => {
+  const handleDialogClose = (options: string[], courses: string[], studentIds: string[], group: number) => {
     setSelectedOptions({ ...selectedOptions, [group]: options });
+    setSelectedCourses({ ...selectedCourses, [group]: courses });
+    setSelectedStudentIds({ ...selectedStudentIds, [group]: studentIds });
     setIsDialogOpen({ ...isDialogOpen, [group]: false });
   };
 
-
   useEffect(() => {
-
     const anyFiltersSelected = Object.values(selectedOptions).some(options => options.length > 0);
-
     setIsGenerateGraphEnabled(anyFiltersSelected);
-
   }, [selectedOptions]);
-
-
 
   return (
     <div>
@@ -61,6 +67,18 @@ const App: React.FC = () => {
             <ul>
               {selectedOptions[group].map((option, index) => (
                 <li key={index}>{option}</li>
+              ))}
+            </ul>
+            <h4>Selected Courses for Group {group}:</h4>
+            <ul>
+              {selectedCourses[group].map((course, index) => (
+                <li key={index}>{course}</li>
+              ))}
+            </ul>
+            <h4>Selected Student IDs for Group {group}:</h4>
+            <ul>
+              {selectedStudentIds[group].map((studentId, index) => (
+                <li key={index}>{studentId}</li>
               ))}
             </ul>
           </div>
