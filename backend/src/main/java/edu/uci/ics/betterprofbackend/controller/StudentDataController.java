@@ -6,11 +6,13 @@ import edu.uci.ics.betterprofbackend.util.InputSanitizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 import java.util.Set;
 
+@CrossOrigin()
 @RestController
 @RequiredArgsConstructor
 public class StudentDataController {
