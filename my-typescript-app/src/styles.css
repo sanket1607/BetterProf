@@ -1,0 +1,77 @@
+/* styles.css */
+
+.generate-graph-button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Some padding */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer/hand icon */
+    font-size: 16px; /* Increase font size */
+  }
+  
+  .generate-graph-button:disabled {
+    background-color: #ccc; /* Gray background */
+    cursor: not-allowed; /* Not-allowed cursor */
+  }
+  
+  .generate-graph-button:not(:disabled):hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialog {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.selected-options {
+  margin-bottom: 20px;
+}
+
+.selected-option {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.remove-option {
+  cursor: pointer;
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-results {
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1010; /* Ensure it appears above other elements */
+  background: white;
+}
+
+.search-result {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-result:hover {
+  background: #f0f0f0;
+}

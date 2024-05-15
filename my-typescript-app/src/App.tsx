@@ -1,44 +1,80 @@
-import React, { useState } from 'react';
-import './App.css';
-import { ResponsiveRadar } from '@nivo/radar';
-import { RadarChart } from "./RadarChart";
+import React, { useState, useEffect } from 'react';
 import DialogBox from './DialogBox';
-import Button from './Button';
+import Buttons from './Buttons';
+import './styles.css';
 
-function App() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+const App: React.FC = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState<{ [key: number]: boolean }>({
+    1: false,
+    2: false,
+    3: false,
+  });
+  const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string[] }>({
+    1: [],
+    2: [],
+    3: [],
+  });
 
-  const handleOpenDialog = () => {
-    setIsDialogOpen(true);
+  const [isGenerateGraphEnabled, setIsGenerateGraphEnabled] = useState<boolean>(false);
+
+  const handleDialogOpen = (group: number) => {
+    setIsDialogOpen({ ...isDialogOpen, [group]: true });
   };
 
-  const handleCloseDialog = (options: string[]) => {
-    setIsDialogOpen(false);
-    setSelectedOptions(options);
+  const handleDialogClose = (options: string[], group: number) => {
+    setSelectedOptions({ ...selectedOptions, [group]: options });
+    setIsDialogOpen({ ...isDialogOpen, [group]: false });
   };
+
+
+  useEffect(() => {
+
+    const anyFiltersSelected = Object.values(selectedOptions).some(options => options.length > 0);
+
+    setIsGenerateGraphEnabled(anyFiltersSelected);
+
+  }, [selectedOptions]);
+
+
 
   return (
-    <div className="App">
-      <img src="uci.png" alt="My Image" />
-      Pep
-      <RadarChart />
-      <div className="app">
-        <div className="dialog-button">
-          <Button onClick={handleOpenDialog} />
-        </div>
-        <DialogBox isOpen={isDialogOpen} onClose={handleCloseDialog} />
-      </div>
-      <div className="selected-options">
-        <h3>Selected Options:</h3>
-        {selectedOptions.map((option, index) => (
-          <div key={index} className="selected-option">
-            {option}
+    <div>
+      <h1>My App</h1>
+      <Buttons
+        onClick1={() => handleDialogOpen(1)}
+        onClick2={() => handleDialogOpen(2)}
+        onClick3={() => handleDialogOpen(3)}
+      />
+      {[1, 2, 3].map((group) => (
+        <DialogBox
+          key={group}
+          isOpen={isDialogOpen[group]}
+          onClose={handleDialogClose}
+          group={group}
+        />
+      ))}
+      <div>
+        <h3>Chosen Filters:</h3>
+        {[1, 2, 3].map((group) => (
+          <div key={group}>
+            <h4>Group {group}:</h4>
+            <ul>
+              {selectedOptions[group].map((option, index) => (
+                <li key={index}>{option}</li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
+      <button
+        className="generate-graph-button"
+        disabled={!isGenerateGraphEnabled}
+        onClick={() => console.log('Generate Graph')}
+      >
+        Generate Graph
+      </button>
     </div>
   );
-}
+};
 
 export default App;
