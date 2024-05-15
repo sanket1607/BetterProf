@@ -1,17 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const DialogBox = ({ isOpen, onClose }) => {
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState([]);
-  const options = ["test", "test2", "test3"];
-  const searchInputRef = useRef(null);
+// Define the props for the DialogBox component
+interface DialogBoxProps {
+  isOpen: boolean;
+  onClose: (selectedOptions: string[], group: number) => void;
+  group: number;
+}
 
-  const handleRemoveOption = (option) => {
+// DialogBox component
+const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
+  const options: string[] = ["test", "test2", "test3"];
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+
+  const handleRemoveOption = (option: string) => {
     setSelectedOptions(selectedOptions.filter((item) => item !== option));
   };
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchQuery(value);
 
@@ -21,38 +30,38 @@ const DialogBox = ({ isOpen, onClose }) => {
     setFilteredOptions(filtered);
   };
 
-  const handleSearchResultClick = (option) => {
+  const handleSearchResultClick = (option: string) => {
     setSelectedOptions([...selectedOptions, option]);
     setSearchQuery('');
     setFilteredOptions([]);
   };
 
   const handleClose = () => {
-    onClose(selectedOptions);
+    onClose(selectedOptions, group);
   };
 
   const handleSearchFocus = () => {
     setFilteredOptions(options);
   };
 
-  const handleClickOutside = (event) => {
-    if (searchInputRef.current && !searchInputRef.current.contains(event.target)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dialogRef.current && !dialogRef.current.contains(event.target as Node)) {
       setFilteredOptions([]);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   if (!isOpen) return null;
 
   return (
     <div className="dialog-overlay">
-      <div className="dialog">
+      <div className="dialog" ref={dialogRef}>
         <div className="selected-options">
-          <h3>Selected Options:</h3>
+          <h3>Selected Options for Group {group}:</h3>
           <div className="options-container">
             {selectedOptions.map((option, index) => (
               <div key={index} className="selected-option">

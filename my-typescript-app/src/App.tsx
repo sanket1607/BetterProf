@@ -1,51 +1,80 @@
-import React, { useState } from 'react';
-import './App.css';
-// import { RadarChart } from "./RadarChart";
-// import DialogBox from './DialogBox';
-// import Button from './Button';
-import FilterComponent from './Filter';
-import DialogBox from './Dialog';
-import { RadarChart } from './RadarChart';
-import { Dialog } from '@mui/material';
-
-// function App() {
+import React, { useState, useEffect } from 'react';
+import DialogBox from './DialogBox';
+import Buttons from './Buttons';
+import './styles.css';
 
 const App: React.FC = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<{ [key: number]: boolean }>({
+    1: false,
+    2: false,
+    3: false,
+  });
+  const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string[] }>({
+    1: [],
+    2: [],
+    3: [],
+  });
 
-  const handleDialogClose = (selectedOptions: string[]) => {
-    console.log('Selected options:', selectedOptions);
-    setIsDialogOpen(false);
+  const [isGenerateGraphEnabled, setIsGenerateGraphEnabled] = useState<boolean>(false);
+
+  const handleDialogOpen = (group: number) => {
+    setIsDialogOpen({ ...isDialogOpen, [group]: true });
   };
+
+  const handleDialogClose = (options: string[], group: number) => {
+    setSelectedOptions({ ...selectedOptions, [group]: options });
+    setIsDialogOpen({ ...isDialogOpen, [group]: false });
+  };
+
+
+  useEffect(() => {
+
+    const anyFiltersSelected = Object.values(selectedOptions).some(options => options.length > 0);
+
+    setIsGenerateGraphEnabled(anyFiltersSelected);
+
+  }, [selectedOptions]);
+
+
 
   return (
     <div>
-    <h1>My App</h1>
-    <RadarChart/>
-    <FilterComponent />
-    <button onClick={() => setIsDialogOpen(true)}>Open Dialog</button>
-    <DialogBox isOpen={isDialogOpen} onClose={handleDialogClose} />
-
-  </div>
-    // <div className="App">
-    //   {/* <img src="uci.png" /> */}
-    //   {/* <RadarChart /> */}
-    //   <div className="app">
-    //     <div className="dialog-button">
-    //       <Button onClick={handleOpenDialog} />
-    //     </div>
-    //     <DialogBox isOpen={isDialogOpen} onClose={handleCloseDialog} />
-    //   </div>
-    //   <div className="selected-options">
-    //     <h3>Selected Options:</h3>
-    //     {selectedOptions.map((option, index) => (
-    //       <div key={index} className="selected-option">
-    //         {option}
-    //       </div>
-    //     ))}
-    //   </div>
-    // </div>
+      <h1>My App</h1>
+      <Buttons
+        onClick1={() => handleDialogOpen(1)}
+        onClick2={() => handleDialogOpen(2)}
+        onClick3={() => handleDialogOpen(3)}
+      />
+      {[1, 2, 3].map((group) => (
+        <DialogBox
+          key={group}
+          isOpen={isDialogOpen[group]}
+          onClose={handleDialogClose}
+          group={group}
+        />
+      ))}
+      <div>
+        <h3>Chosen Filters:</h3>
+        {[1, 2, 3].map((group) => (
+          <div key={group}>
+            <h4>Group {group}:</h4>
+            <ul>
+              {selectedOptions[group].map((option, index) => (
+                <li key={index}>{option}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <button
+        className="generate-graph-button"
+        disabled={!isGenerateGraphEnabled}
+        onClick={() => console.log('Generate Graph')}
+      >
+        Generate Graph
+      </button>
+    </div>
   );
-}
+};
 
 export default App;
