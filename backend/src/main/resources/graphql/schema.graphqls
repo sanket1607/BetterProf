@@ -1,12 +1,17 @@
 type Query{
-    getAvailableCohortTerms: [String],
+    getAvailableTerms: [String]
+
+    getAvailableCourses(
+        terms: [String]
+    ): [String]
+
+    getStudentIds(
+        terms: [String],
+        courses: [String]
+    ): [String]
 
     getNormalisedStudentMean(
-        cohort: [String]
-        gradeFlag: [GradeFlag]! = [BMA, CPB],
-        isURG: [Boolean]! = [true, false],
-        isFirstGen: [Boolean]! = [true, false]
-        mentalHealthRange: [Float]! = [-1, 1]
+        studentIds: [String]
     ): NormalisedStudent
 }
 

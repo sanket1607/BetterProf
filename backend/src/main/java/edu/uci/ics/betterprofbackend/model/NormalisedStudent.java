@@ -10,7 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NormalisedStudent {
-    private final String term;
     private float grade;
     private float gradeFlag;
     private float isURG;

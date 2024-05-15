@@ -8,7 +8,6 @@ public class StudentNormaliser {
 
     public static NormalisedStudent toNormalisedStudent(Student student) {
         return NormalisedStudent.builder()
-                .term(student.term())
                 .grade(
                         BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.grade())
                 )
