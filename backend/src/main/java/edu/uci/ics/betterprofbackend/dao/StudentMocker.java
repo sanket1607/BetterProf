@@ -20,6 +20,8 @@ public class StudentMocker implements StudentDao {
         List<Student> mockStudents = new ArrayList<>();
 
         mockStudents.add(new Student("f23",
+                "ICS32",
+                "f23_001",
                 Grade.A,
                 GradeFlag.BMA,
                 true,
@@ -35,6 +37,8 @@ public class StudentMocker implements StudentDao {
                 1));
 
         mockStudents.add(new Student("w23",
+                "ICS32",
+                "w23_004",
                 Grade.C_Minus,
                 GradeFlag.CPB,
                 false,
@@ -46,7 +50,58 @@ public class StudentMocker implements StudentDao {
                 5,
                 2,
                 3,
+                1,
+                1));
+
+        mockStudents.add(new Student("w24",
+                "ICS32A",
+                "w24_012",
+                Grade.B,
+                GradeFlag.BMA,
+                false,
+                true,
+                3,
+                2,
+                4,
+                2,
+                3,
+                2,
+                3,
+                0,
+                1));
+
+        mockStudents.add(new Student("w23",
+                "ICS32",
+                "w23_003",
+                Grade.C_Minus,
+                GradeFlag.CPB,
+                false,
+                false,
                 5,
+                5,
+                3,
+                5,
+                5,
+                2,
+                3,
+                1,
+                1));
+
+        mockStudents.add(new Student("w23",
+                "ICS32",
+                "w23_044",
+                Grade.C_Minus,
+                GradeFlag.CPB,
+                false,
+                false,
+                5,
+                5,
+                3,
+                5,
+                5,
+                2,
+                3,
+                0,
                 1));
 
         return mockStudents;

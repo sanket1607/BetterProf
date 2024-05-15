@@ -56,7 +56,7 @@ public class NormalisedStudentMean implements Consumer<NormalisedStudent> {
 
     private static NormalisedStudent buildZeroStudent() {
         final NormalisedStudent zero;
-        zero = new NormalisedStudent("",
+        zero = new NormalisedStudent(
                 0,
                 0,
                 0,
