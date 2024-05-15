@@ -28,7 +28,7 @@ public class StudentDataService {
     public List<String> getAvailableCourses(Set<String> terms) {
         return studentDao.getStudents()
                 .stream()
-                .filter(student -> terms.contains(student.term()))
+                .filter(student -> terms.contains(student.term().toLowerCase()))
                 .map(Student::course)
                 .distinct()
                 .toList();
@@ -38,11 +38,10 @@ public class StudentDataService {
         return studentDao.getStudents()
                 .stream()
                 .filter(student ->
-                        terms.contains(student.term())
-                                && courses.contains(student.course())
+                        terms.contains(student.term().toLowerCase())
+                                && courses.contains(student.course().toLowerCase())
                 )
-                .map(Student::course)
-                .distinct()
+                .map(Student::id)
                 .toList();
     }
 
