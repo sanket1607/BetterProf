@@ -49,6 +49,51 @@ public class StudentMocker implements StudentDao {
                 5,
                 1));
 
+        mockStudents.add(new Student("w24",
+                Grade.B,
+                GradeFlag.BMA,
+                false,
+                true,
+                3,
+                2,
+                4,
+                2,
+                3,
+                2,
+                3,
+                5,
+                1));
+
+        mockStudents.add(new Student("w23",
+                Grade.C_Minus,
+                GradeFlag.CPB,
+                false,
+                false,
+                5,
+                5,
+                3,
+                5,
+                5,
+                2,
+                3,
+                5,
+                1));
+        
+        mockStudents.add(new Student("w23",
+                Grade.C_Minus,
+                GradeFlag.CPB,
+                false,
+                false,
+                5,
+                5,
+                3,
+                5,
+                5,
+                2,
+                3,
+                5,
+                1));
+
         return mockStudents;
     }
 }
