@@ -7,8 +7,9 @@ import java.util.Set;
 
 @Builder
 public record StudentFilterCriteria(
-        Set<String> cohort,
-        Set<GradeFlag> gradeFlag,
+        Set<String> cohorts,
+        Set<String> terms,
+        Set<GradeFlag> gradeFlags,
         Set<Boolean> isURG,
         Set<Boolean> isFirstGen,
         List<Float> mentalHealthRange
