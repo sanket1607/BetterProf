@@ -2,6 +2,8 @@ package edu.uci.ics.betterprofbackend.model;
 
 public record Student(
         String term,
+        String course,
+        String id,
         Grade grade,
         GradeFlag gradeFlag,
         boolean isURG,
