@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ApolloClient, InMemoryCache, gql, ApolloProvider, useQuery, useLazyQuery } from '@apollo/client';
-import './styles.css'; // Make sure to have the appropriate CSS for styles
+import '../styles.css';
 
 // Define the props for the DialogBox component
 interface DialogBoxProps {
@@ -228,7 +228,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
         </div>
         {loading && <p>Loading terms...</p>}
         {error && <p>Error loading terms</p>}
-        
+
         <button className="plus-button" onClick={handleShowCoursesDropdown}>+</button>
 
         {isCourseDropdownVisible && (
@@ -265,7 +265,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
             </div>
             {coursesLoading && <p>Loading courses...</p>}
             {coursesError && <p>Error loading courses</p>}
-            
+
             <button className="plus-button" onClick={handleShowStudentIdsDropdown}>+</button>
 
             {isStudentIdDropdownVisible && (
@@ -306,7 +306,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
             )}
           </div>
         )}
-        
+
         <button onClick={handleClose}>Close</button>
       </div>
     </div>

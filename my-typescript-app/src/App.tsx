@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import DialogBox from './DialogBox';
-import Buttons from './Buttons';
+import DialogBox from './components/DialogBox';
+import Buttons from './components/Buttons';
+import GenerateGraphButton from './components/GenerateGraphButton';
 import './styles.css';
 
 const App: React.FC = () => {
@@ -55,7 +56,7 @@ const App: React.FC = () => {
         <DialogBox
           key={group}
           isOpen={isDialogOpen[group]}
-          onClose={handleDialogClose}
+          onClose={(options: string[], courses: string[], studentIds: string[]) => handleDialogClose(options, courses, studentIds, group)}
           group={group}
         />
       ))}
@@ -84,13 +85,10 @@ const App: React.FC = () => {
           </div>
         ))}
       </div>
-      <button
-        className="generate-graph-button"
-        disabled={!isGenerateGraphEnabled}
-        onClick={() => console.log('Generate Graph')}
-      >
-        Generate Graph
-      </button>
+      <GenerateGraphButton
+        isEnabled={isGenerateGraphEnabled}
+        selectedStudentIds={selectedStudentIds} // Pass selectedStudentIds to GenerateGraphButton
+      />
     </div>
   );
 };
