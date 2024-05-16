@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DialogBox from './components/DialogBox';
-import Buttons from './components/Buttons';
 import GenerateGraphButton from './components/GenerateGraphButton';
+import uciLogo from './uci.png'; // Import the UCI logo
 import './styles.css';
 
 const App: React.FC = () => {
@@ -46,45 +46,43 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <h1>My App</h1>
-      <Buttons
-        onClick1={() => handleDialogOpen(1)}
-        onClick2={() => handleDialogOpen(2)}
-        onClick3={() => handleDialogOpen(3)}
-      />
+      <div className="header">
+        <img src={uciLogo} alt="UCI Logo" className="uci-logo" />
+        <h1>BetterProf</h1>
+      </div>
       {[1, 2, 3].map((group) => (
-        <DialogBox
-          key={group}
-          isOpen={isDialogOpen[group]}
-          onClose={(options: string[], courses: string[], studentIds: string[]) => handleDialogClose(options, courses, studentIds, group)}
-          group={group}
-        />
-      ))}
-      <div>
-        <h3>Chosen Filters:</h3>
-        {[1, 2, 3].map((group) => (
-          <div key={group}>
-            <h4>Group {group}:</h4>
+        <div key={group} className="group-container">
+          <h3>Group {group}</h3>
+          <button onClick={() => handleDialogOpen(group)} className="configure-button">
+            Configure
+          </button>
+          <DialogBox
+            isOpen={isDialogOpen[group]}
+            onClose={(options: string[], courses: string[], studentIds: string[]) => handleDialogClose(options, courses, studentIds, group)}
+            group={group}
+          />
+          <div className="selection-container">
+            <h4>Terms:</h4>
             <ul>
               {selectedOptions[group].map((option, index) => (
                 <li key={index}>{option}</li>
               ))}
             </ul>
-            <h4>Selected Courses for Group {group}:</h4>
+            <h4>Courses:</h4>
             <ul>
               {selectedCourses[group].map((course, index) => (
                 <li key={index}>{course}</li>
               ))}
             </ul>
-            <h4>Selected Student IDs for Group {group}:</h4>
+            <h4>Student IDs:</h4>
             <ul>
               {selectedStudentIds[group].map((studentId, index) => (
                 <li key={index}>{studentId}</li>
               ))}
             </ul>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
       <GenerateGraphButton
         isEnabled={isGenerateGraphEnabled}
         selectedStudentIds={selectedStudentIds} // Pass selectedStudentIds to GenerateGraphButton

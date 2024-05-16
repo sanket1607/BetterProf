@@ -1,77 +1,382 @@
-/* styles.css */
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-.generate-graph-button {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    padding: 10px 20px; /* Some padding */
-    border: none; /* Remove border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Pointer/hand icon */
-    font-size: 16px; /* Increase font size */
-  }
-  
-  .generate-graph-button:disabled {
-    background-color: #ccc; /* Gray background */
-    cursor: not-allowed; /* Not-allowed cursor */
-  }
-  
-  .generate-graph-button:not(:disabled):hover {
-    background-color: #45a049; /* Darker green on hover */
-  }
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  transition: background 0.3s ease-in-out;
+  padding-bottom: 100px; /* Add padding at the bottom */
+}
 
+/* App Styles */
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Header Styles */
+.header {
+  background-color: #1a5389; /* Adjusted color to match the shade of blue from the top of the sample image */
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.uci-logo {
+  height: 90px; /* Increase the height of the logo */
+  margin-right: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 36px; /* Increase the font size of the text */
+}
+
+/* Group Container */
+.group-container {
+  margin-bottom: 20px; /* Add space between groups */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selection-container {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.selection-container h4,
+.selection-container h5 {
+  margin: 10px 0; /* Margin for headings */
+  display: inline-block; /* Keep headings inline */
+  margin-right: 10px; /* Space between heading and options */
+  font-weight: 600; /* Bold headings */
+  color: #333; /* Dark text color */
+}
+
+.selection-container ul {
+  display: inline-block; /* Keep list inline */
+  list-style-type: none; /* Remove default list style */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.selection-container li {
+  background: #e1f5fe;
+  color: #0277bd;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-left: 5px; /* Add space between items */
+  display: inline-block; /* Keep items inline */
+}
+
+/* Selected Option */
+.selected-option {
+  background: linear-gradient(135deg, #ffebcd, #ffd700); /* Gradient background with warm colors */
+  color: #8b4513; /* Brown text */
+  padding: 12px 20px; /* Increased padding for better readability */
+  border: 2px solid #8b4513; /* Border around the option */
+  border-radius: 10px; /* Rounded corners */
+  margin-right: 10px; /* Space between options */
+  margin-bottom: 10px; /* Space between rows */
+  display: inline-block; /* Keep options inline */
+  font-weight: 700; /* Make text bold */
+  font-size: 18px; /* Increase font size */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  text-align: center; /* Center align text */
+  text-transform: capitalize; /* Capitalize text */
+}
+
+.selected-option:hover {
+  background: linear-gradient(135deg, #ffd700, #ff8c00); /* Darker gradient on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.remove-option {
+  color: #ff5252; /* Red color for remove icon */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 20px; /* Increase icon size */
+  margin-left: 12px; /* Space between text and icon */
+  transition: color 0.3s; /* Smooth transition for color */
+}
+
+.remove-option:hover {
+  color: #d32f2f; /* Darker red on hover */
+}
+
+/* Search Container */
+/* Search Container */
+/* Search Container */
+.search-container {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+input[type="text"] {
+  width: calc(100% - 40px); /* Adjusted width for padding */
+  padding: 12px 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: #32cd32;
+  box-shadow: 0 0 8px rgba(50, 205, 50, 0.5);
+}
+
+/* Search Results */
+.search-results {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #32cd32;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.search-result {
+  padding: 15px;
+  cursor: pointer;
+  font-size: 18px; /* Increased font size */
+  font-weight: 600; /* Bold text */
+  color: #333;
+  background: #e6f7ff; /* Light pastel blue background */
+  border-bottom: 1px solid #ccc; /* Border between options */
+  transition: background-color 0.3s, padding 0.3s, color 0.3s;
+}
+
+.search-result:hover {
+  background-color: #bae7ff; /* Slightly darker blue on hover */
+  padding-left: 20px;
+  color: #0056b3; /* Darker text color on hover */
+}
+
+
+
+/* Configure Button */
+.configure-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-bottom: 10px;
+}
+
+.configure-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Plus Button */
+.plus-button {
+  background-color: #007bff;
+  color: white;
+  width: 40px; /* Set width */
+  height: 40px; /* Set height */
+  border: none;
+  border-radius: 50%; /* Fully rounded corners */
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  cursor: pointer;
+  font-size: 20px;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-top: 10px;
+}
+
+.plus-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Overlay */
 .dialog-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease-in-out;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Dialog Box */
 .dialog {
-  background: white;
-  padding: 20px;
-  border-radius: 5px;
-  max-width: 500px;
+  background: #ffffff;
+  padding: 40px;
+  padding-bottom: 60px; /* Extra padding for the button */
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 60%; /* Increase width */
+  max-width: 90%;
+  position: relative; /* Ensure positioning context for button */
+}
+
+.dialog-enter {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.dialog-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.dialog-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dialog-exit-active {
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Button Container */
+.button-container {
+  position: absolute;
+  bottom: 20px;
   width: 100%;
+  text-align: center;
+}
+
+/* Close Button */
+.close-button {
+  background-color: #3f51b5; /* Blue background */
+  color: white; /* White text */
+  padding: 12px 24px; /* Increase padding */
+  border: none; /* No border */
+  border-radius: 20px; /* Fully rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 18px; /* Increase font size */
+  font-weight: 500; /* Font weight */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  outline: none; /* Remove outline */
+  display: inline-block;
+  text-align: center;
+  z-index: 1;
+}
+
+.close-button:hover {
+  background-color: #303f9f; /* Darker blue on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Additional improvements */
+h3, h4, h5 {
+  margin-bottom: 15px;
+  color: #333; /* Dark text color */
+  font-size: 24px;
+  font-weight: 600; /* Bold text */
+}
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px; /* Space between options */
+}
+
+.error {
+  color: #e74c3c;
+  font-weight: 500;
+}
+
+.loading {
+  color: #3498db;
+  font-weight: 500;
+}
+
+/* Generate Graph Button */
+.generate-graph-button {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Some padding */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer/hand icon */
+  font-size: 16px; /* Increase font size */
+  transition: background-color 0.3s, transform 0.3s;
+  margin-left: 20px;
+}
+
+.generate-graph-button:disabled {
+  background-color: #ccc; /* Gray background */
+  cursor: not-allowed; /* Not-allowed cursor */
+}
+
+.generate-graph-button:not(:disabled):hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: translateY(-2px);
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.app {
+  display: flex;
+  justify-content: flex-start; /* Align items to the left */
+  padding: 20px; /* Add some padding for spacing */
+}
+
+.dialog-button {
+  margin-right: 20px; /* Add margin to separate from other elements */
+  z-index: 1; /* Ensure the button is above other elements */
 }
 
 .selected-options {
+  text-align: left; /* Align selected options to the left */
+  margin-top: 20px; /* Add some margin from the button */
   margin-bottom: 20px;
-}
-
-.selected-option {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-
-.remove-option {
-  cursor: pointer;
-}
-
-.search-container {
-  margin-bottom: 20px;
-}
-
-.search-results {
-  border: 1px solid #ccc;
-  max-height: 150px;
-  overflow-y: auto;
-  position: relative;
-  z-index: 1010; /* Ensure it appears above other elements */
-  background: white;
-}
-
-.search-result {
-  padding: 10px;
-  cursor: pointer;
-}
-
-.search-result:hover {
-  background: #f0f0f0;
 }
