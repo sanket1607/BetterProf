@@ -11,8 +11,8 @@ public class StudentFilter implements BiPredicate<Student, StudentFilterCriteria
     public boolean test(Student student,
                         StudentFilterCriteria studentFilterCriteria) {
         boolean accept;
-        accept = studentFilterCriteria.cohorts().contains(student.term());
-        accept = accept && studentFilterCriteria.gradeFlags().contains(student.gradeFlag());
+        accept = studentFilterCriteria.cohorts().contains(student.getTerm());
+        accept = accept && studentFilterCriteria.gradeFlags().contains(student.getGradesFlag());
         accept = accept && studentFilterCriteria.isURG().contains(student.isURG());
         accept = accept && studentFilterCriteria.isFirstGen().contains(student.isFirstGen());
         accept = accept && isMentalHealthInRange(studentFilterCriteria, student);
@@ -20,7 +20,7 @@ public class StudentFilter implements BiPredicate<Student, StudentFilterCriteria
     }
 
     private boolean isMentalHealthInRange(StudentFilterCriteria studentFilterCriteria, Student student) {
-        final int studentMentalHealth = student.mentalHealth();
+        final int studentMentalHealth = student.getMentalHealth();
         return studentFilterCriteria.mentalHealthRange().get(0) <= studentMentalHealth
                 && studentFilterCriteria.mentalHealthRange().get(1) >= studentMentalHealth;
     }
