@@ -24,19 +24,16 @@ public class MetadataController {
 
     @QueryMapping
     public List<String> getAvailableCourses(
-            @Argument Set<String> terms
+            @Argument List<String> terms
     ) {
-        terms = InputSanitizer.sanitize(terms);
         return studentDataService.getAvailableCourses(terms);
     }
 
     @QueryMapping
     public List<String> getStudentIds(
-            @Argument Set<String> terms,
-            @Argument Set<String> courses
+            @Argument List<String> terms,
+            @Argument List<String> courses
     ) {
-        terms = InputSanitizer.sanitize(terms);
-        courses = InputSanitizer.sanitize(courses);
         return studentDataService.getStudentIds(terms, courses);
     }
 }

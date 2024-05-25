@@ -1,7 +1,12 @@
 package edu.uci.ics.betterprofbackend.model;
 
 public enum GradeFlag {
-    BMA, CPB;
+    BMA("BMA"), CPB("CPB");
+
+    private String value;
+    GradeFlag(String value) {
+        this.value = value;
+    }
 
     public GradeFlag fromGrade(Grade grade) {
         return switch (grade) {

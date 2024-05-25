@@ -3,52 +3,43 @@ package edu.uci.ics.betterprofbackend.service;
 import edu.uci.ics.betterprofbackend.dao.StudentDao;
 import edu.uci.ics.betterprofbackend.model.NormalisedStudent;
 import edu.uci.ics.betterprofbackend.model.Student;
+import edu.uci.ics.betterprofbackend.repositories.StudentRepository;
 import edu.uci.ics.betterprofbackend.statistics.NormalisedStudentMean;
 import edu.uci.ics.betterprofbackend.transformer.StudentNormaliser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class StudentDataService {
-    private final StudentDao studentDao;
+    private final StudentRepository studentRepository;
 
     public List<String> getAvailableTerms() {
-        return studentDao.getStudents()
+        return studentRepository.findDistinctTerm()
                 .stream()
-                .map(Student::term)
-                .distinct()
                 .toList();
     }
 
-    public List<String> getAvailableCourses(Set<String> terms) {
-        return studentDao.getStudents()
+    public List<String> getAvailableCourses(List<String> terms) {
+        return studentRepository.findDistinctCourseByTermIn(terms)
                 .stream()
-                .filter(student -> terms.contains(student.term().toLowerCase()))
-                .map(Student::course)
-                .distinct()
                 .toList();
     }
 
-    public List<String> getStudentIds(Set<String> terms, Set<String> courses) {
-        return studentDao.getStudents()
+    public List<String> getStudentIds(List<String> terms, List<String> courses) {
+        return studentRepository.findDistinctStudentIdByTermInAndCourseIn(terms, courses)
                 .stream()
-                .filter(student ->
-                        terms.contains(student.term().toLowerCase())
-                                && courses.contains(student.course().toLowerCase())
-                )
-                .map(Student::id)
                 .toList();
     }
 
-    public Optional<NormalisedStudent> getNormalisedStudentMean(Set<String> studentIds) {
-        NormalisedStudentMean normalisedStudentMean = studentDao.getStudents()
+    public Optional<NormalisedStudent> getNormalisedStudentMean(List<String> studentIds) {
+
+        NormalisedStudentMean normalisedStudentMean = studentRepository.findAllByStudentIdIn(studentIds)
                 .stream()
-                .filter(student -> studentIds.contains(student.id()))
                 .map(StudentNormaliser::toNormalisedStudent)
                 .collect(NormalisedStudentMean::new,
                         NormalisedStudentMean::accept,

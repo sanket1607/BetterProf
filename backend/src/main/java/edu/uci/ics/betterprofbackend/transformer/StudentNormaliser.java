@@ -9,10 +9,10 @@ public class StudentNormaliser {
     public static NormalisedStudent toNormalisedStudent(Student student) {
         return NormalisedStudent.builder()
                 .grade(
-                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.grade())
+                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getGrade())
                 )
                 .gradeFlag(
-                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.gradeFlag())
+                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getGradesFlag())
                 )
                 .isURG(
                         BetterProfChartScaleNormaliser.normaliseBoolean(student.isURG())
@@ -21,31 +21,31 @@ public class StudentNormaliser {
                         BetterProfChartScaleNormaliser.normaliseBoolean(student.isFirstGen())
                 )
                 .mentalHealth(
-                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.mentalHealth())
+                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getMentalHealth())
                 )
                 .passingSatisfaction(
-                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.passingSatisfaction())
+                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getPassingSatisfaction())
                 )
                 .mathBackground(
-                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.mathBackground())
+                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getMathBackground())
                 )
                 .senseOfBelonging(
-                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.senseOfBelonging())
+                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getSenseOfBelonging())
                 )
                 .hasConsideredLeavingCS(
-                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.hasConsideredLeavingCS())
+                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getHasConsideredLeavingCS())
                 )
                 .codingExperience(
-                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.codingExperience())
+                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getCodingExperience())
                 )
                 .passingConfidence(
-                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.passingConfidence())
+                        BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getPassingConfidence())
                 )
                 .hasRoleModels(
-                        BetterProfChartScaleNormaliser.normaliseBoolean(student.hasRoleModels())
+                        BetterProfChartScaleNormaliser.normaliseBoolean(student.getHasRoleModels())
                 )
                 .hangsOutWithCSClassmates(
-                        BetterProfChartScaleNormaliser.normaliseBoolean(student.hangsOutWithCSClassmates())
+                        BetterProfChartScaleNormaliser.normaliseBoolean(student.getHangsOutWithCSClassmates())
                 )
                 .build();
     }
