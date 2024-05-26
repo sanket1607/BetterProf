@@ -13,7 +13,7 @@ public class StudentFilter implements BiPredicate<Student, StudentFilterCriteria
         boolean accept;
         accept = studentFilterCriteria.cohorts().contains(student.getTerm());
         accept = accept && studentFilterCriteria.gradeFlags().contains(student.getGradesFlag());
-        accept = accept && studentFilterCriteria.isURG().contains(student.isURG());
+        accept = accept && studentFilterCriteria.isURG().contains(student.getIsURG().isURG());
         accept = accept && studentFilterCriteria.isFirstGen().contains(student.isFirstGen());
         accept = accept && isMentalHealthInRange(studentFilterCriteria, student);
         return accept;
