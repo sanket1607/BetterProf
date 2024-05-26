@@ -9,6 +9,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,8 +21,7 @@ public class StudentDataController {
 
     @QueryMapping
     public NormalisedStudent getNormalisedStudentMean(
-            @Argument Set<String> studentIds) {
-        studentIds = InputSanitizer.sanitize(studentIds);
+            @Argument List<String> studentIds) {
         Optional<NormalisedStudent> normalisedStudent = studentDataService.getNormalisedStudentMean(studentIds);
         return normalisedStudent
                 .orElse(null);
