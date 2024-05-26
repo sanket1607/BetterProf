@@ -29,7 +29,7 @@ public class Student {
     private String gender;
 
     @Column(name = "urg_flag")
-    private boolean isURG;
+    private UnderRepresentedGroup isURG;
 
     @Column(name = "first_gen")
     private boolean isFirstGen;
@@ -56,8 +56,8 @@ public class Student {
     private int passingConfidence;
 
     @Column(name = "role_models")
-    private int hasRoleModels;
+    private boolean hasRoleModels;
 
     @Column(name = "cs_classmates")
-    private int hangsOutWithCSClassmates;
+    private boolean hangsOutWithCSClassmates;
 }

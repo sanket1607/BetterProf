@@ -1,11 +1,22 @@
 package edu.uci.ics.betterprofbackend.model;
 
-public enum GradeFlag {
-    BMA("BMA"), CPB("CPB");
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-    private String value;
-    GradeFlag(String value) {
-        this.value = value;
+@Getter
+@RequiredArgsConstructor
+public enum GradeFlag {
+    BMA("BM_"), CPB("CP_");
+
+    private final String value;
+
+    public static GradeFlag fromString(String value) {
+        for (GradeFlag gradeFlag : GradeFlag.values()) {
+            if (gradeFlag.value.equalsIgnoreCase(value)) {
+                return gradeFlag;
+            }
+        }
+        throw new IllegalArgumentException();
     }
 
     public GradeFlag fromGrade(Grade grade) {
