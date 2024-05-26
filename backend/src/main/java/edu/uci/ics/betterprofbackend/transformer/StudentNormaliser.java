@@ -15,7 +15,7 @@ public class StudentNormaliser {
                         BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getGradesFlag())
                 )
                 .isURG(
-                        BetterProfChartScaleNormaliser.normaliseBoolean(student.isURG())
+                        BetterProfChartScaleNormaliser.normaliseBoolean(student.getIsURG().isURG())
                 )
                 .isFirstGen(
                         BetterProfChartScaleNormaliser.normaliseBoolean(student.isFirstGen())
@@ -42,10 +42,10 @@ public class StudentNormaliser {
                         BetterProfChartScaleNormaliser.normaliseFromLikertScale(student.getPassingConfidence())
                 )
                 .hasRoleModels(
-                        BetterProfChartScaleNormaliser.normaliseBoolean(student.getHasRoleModels())
+                        BetterProfChartScaleNormaliser.normaliseBoolean(student.isHasRoleModels())
                 )
                 .hangsOutWithCSClassmates(
-                        BetterProfChartScaleNormaliser.normaliseBoolean(student.getHangsOutWithCSClassmates())
+                        BetterProfChartScaleNormaliser.normaliseBoolean(student.isHangsOutWithCSClassmates())
                 )
                 .build();
     }
