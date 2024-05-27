@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DialogBox from './components/DialogBox';
 import GenerateGraphButton from './components/GenerateGraphButton';
 import uciLogo from './uci.png'; // Import the UCI logo
-import './styles.css';
+import './css/app.css';
 
 const App: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState<{ [key: number]: boolean }>({

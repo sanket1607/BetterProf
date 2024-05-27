@@ -1,0 +1,124 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  transition: background 0.3s ease-in-out;
+  padding-bottom: 100px; /* Add padding at the bottom */
+}
+
+/* App Styles */
+.App {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Header Styles */
+.header {
+  background-color: #1a5389; /* Adjusted color to match the shade of blue from the top of the sample image */
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.uci-logo {
+  height: 90px; /* Increase the height of the logo */
+  margin-right: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 36px; /* Increase the font size of the text */
+}
+
+/* Group Container */
+.group-container {
+  margin-bottom: 20px; /* Add space between groups */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selection-container {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.selection-container h4,
+.selection-container h5 {
+  margin: 10px 0; /* Margin for headings */
+  display: inline-block; /* Keep headings inline */
+  margin-right: 10px; /* Space between heading and options */
+  font-weight: 600; /* Bold headings */
+  color: #333; /* Dark text color */
+}
+
+.selection-container ul {
+  display: inline-block; /* Keep list inline */
+  list-style-type: none; /* Remove default list style */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.selection-container li {
+  background: #e1f5fe;
+  color: #0277bd;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-left: 5px; /* Add space between items */
+  display: inline-block; /* Keep items inline */
+}
+
+/* Configure Button */
+.configure-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-bottom: 10px;
+}
+
+.configure-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+input[type="text"] {
+  width: calc(100% - 40px); /* Adjusted width for padding */
+  padding: 12px 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: #32cd32;
+  box-shadow: 0 0 8px rgba(50, 205, 50, 0.5);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Additional improvements */
+h3, h4, h5 {
+  margin-bottom: 15px;
+  color: #333; /* Dark text color */
+  font-size: 24px;
+  font-weight: 600; /* Bold text */
+}

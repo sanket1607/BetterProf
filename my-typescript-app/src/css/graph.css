@@ -1,0 +1,46 @@
+/* Generate Graph Button */
+.generate-graph-button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Some padding */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer/hand icon */
+    font-size: 16px; /* Increase font size */
+    transition: background-color 0.3s, transform 0.3s;
+    margin-top: 20px;
+}
+
+.generate-graph-button:disabled {
+    background-color: #ccc; /* Gray background */
+    cursor: not-allowed; /* Not-allowed cursor */
+}
+
+.generate-graph-button:not(:disabled):hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: translateY(-2px);
+}
+
+/* Graph Container */
+.graph-container {
+    margin-bottom: 20px; /* Add space between groups */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* FadeIn Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 1s ease-in-out;
+}
