@@ -19,7 +19,7 @@ public class BetterProfChartScaleNormaliser {
 
     public static float normaliseFromLikertScale(Grade grade) {
         final float RANGE = RANGE_MAX - RANGE_MIN;
-        final float NUM_GRADES_IN_RANGE = 12;
+        final float NUM_GRADES_IN_RANGE = 11;
         final float GRADE_WIDTH = RANGE / NUM_GRADES_IN_RANGE;
 
         return switch (grade) {
@@ -35,8 +35,7 @@ public class BetterProfChartScaleNormaliser {
             case D_Plus -> RANGE_MAX - 9 * GRADE_WIDTH;
             case D -> RANGE_MAX - 10 * GRADE_WIDTH;
             case D_Minus -> RANGE_MAX - 11 * GRADE_WIDTH;
-            case F -> RANGE_MAX - 12 * GRADE_WIDTH;
-            case DROPPED -> RANGE_MIN;
+            default -> RANGE_MIN;
         };
     }
 
