@@ -18,7 +18,6 @@ public enum Grade {
     D_Plus("D+"),
     D("D"),
     D_Minus("D-"),
-    F("F"),
     DROPPED("");
 
     private final String letter;
@@ -29,6 +28,8 @@ public enum Grade {
                 return grade;
             }
         }
-        throw new IllegalArgumentException(letter + " is not a valid grade");
+        return DROPPED;
+
+//        throw new IllegalArgumentException(letter + " is not a valid grade");
     }
 }
