@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { GET_NORMALISED_STUDENT_MEAN } from '../queries';
 import { RadarChart } from './RadarChart';
@@ -26,14 +26,19 @@ const GenerateGraphButton: React.FC<GenerateGraphButtonProps> = ({ isEnabled, se
           studentIds: selectedStudentIds[group], // Use selectedStudentIds for the query
         },
       }).then(response => {
-        const data = response.data.getNormalisedStudentMean;
-        setResults(prevResults => ({
-          ...prevResults,
-          [group]: data,
-        }));
+        console.log('GraphQL response:', response);
+        const data = response.data?.getNormalisedStudentMean; // Use optional chaining to avoid errors
+        if (data) {
+          setResults(prevResults => ({
+            ...prevResults,
+            [group]: data,
+          }));
+        } else {
+          console.error(`No data returned for group ${group}`);
+        }
         setLoadingGroups(prevLoadingGroups => prevLoadingGroups - 1);
       }).catch(err => {
-        console.error(err);
+        console.error(`Error fetching data for group ${group}:`, err);
         setLoadingGroups(prevLoadingGroups => prevLoadingGroups - 1);
       });
     });
@@ -61,7 +66,7 @@ const GenerateGraphButton: React.FC<GenerateGraphButtonProps> = ({ isEnabled, se
       { field: 'Sense of Belonging', key: 'senseOfBelonging' },
     ];
 
-    const data = fields.map(field => {
+    return fields.map(field => {
       const entry: { [key: string]: any } = { field: field.field };
       Object.keys(results).forEach(group => {
         let value = results[group] && typeof results[group][field.key] === 'number' ? results[group][field.key] : 0;
@@ -71,8 +76,6 @@ const GenerateGraphButton: React.FC<GenerateGraphButtonProps> = ({ isEnabled, se
       });
       return entry;
     });
-
-    return data;
   }, [results]);
 
   const formattedData = isDataFetched ? mapResultsToDataFormat(results) : [];
@@ -80,18 +83,18 @@ const GenerateGraphButton: React.FC<GenerateGraphButtonProps> = ({ isEnabled, se
   const keys = populatedGroups.map(group => `Group ${group}`);
 
   return (
-    <div>
-      <button 
-        className="generate-graph-button" 
-        disabled={!isEnabled} 
-        onClick={handleClick}
-      >
-        Generate Graph
-      </button>
-      {isDataFetched && populatedGroups.length > 0 && (
-        <RadarChart data={formattedData} keys={keys} />
-      )}
-    </div>
+      <div>
+        <button
+            className="generate-graph-button"
+            disabled={!isEnabled}
+            onClick={handleClick}
+        >
+          Generate Graph
+        </button>
+        {isDataFetched && populatedGroups.length > 0 && (
+            <RadarChart data={formattedData} keys={keys} />
+        )}
+      </div>
   );
 };
 
