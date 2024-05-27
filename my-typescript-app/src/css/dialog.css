@@ -1,0 +1,206 @@
+/* Selected Option */
+.selected-option {
+    background: linear-gradient(135deg, #ffebcd, #ffd700); /* Gradient background with warm colors */
+    color: #8b4513; /* Brown text */
+    padding: 12px 20px; /* Increased padding for better readability */
+    border: 2px solid #8b4513; /* Border around the option */
+    border-radius: 10px; /* Rounded corners */
+    margin-right: 10px; /* Space between options */
+    margin-bottom: 10px; /* Space between rows */
+    display: inline-block; /* Keep options inline */
+    font-weight: 700; /* Make text bold */
+    font-size: 18px; /* Increase font size */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    text-align: center; /* Center align text */
+    text-transform: capitalize; /* Capitalize text */
+}
+
+.selected-option:hover {
+    background: linear-gradient(135deg, #ffd700, #ff8c00); /* Darker gradient on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.selected-options {
+    text-align: left; /* Align selected options to the left */
+    margin-top: 20px; /* Add some margin from the button */
+    margin-bottom: 20px;
+}
+
+
+.remove-option {
+    color: #ff5252; /* Red color for remove icon */
+    cursor: pointer; /* Pointer cursor */
+    font-size: 20px; /* Increase icon size */
+    margin-left: 12px; /* Space between text and icon */
+    transition: color 0.3s; /* Smooth transition for color */
+}
+
+.remove-option:hover {
+    color: #d32f2f; /* Darker red on hover */
+}
+
+/* Search Container */
+.search-container {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+/* Search Results */
+.search-results {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    background: #ffffff;
+    border: 1px solid #32cd32;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.search-result {
+    padding: 15px;
+    cursor: pointer;
+    font-size: 18px; /* Increased font size */
+    font-weight: 600; /* Bold text */
+    color: #333;
+    background: #e6f7ff; /* Light pastel blue background */
+    border-bottom: 1px solid #ccc; /* Border between options */
+    transition: background-color 0.3s, padding 0.3s, color 0.3s;
+}
+
+.search-result:hover {
+    background-color: #bae7ff; /* Slightly darker blue on hover */
+    padding-left: 20px;
+    color: #0056b3; /* Darker text color on hover */
+}
+
+/* Plus Button */
+.plus-button {
+    background-color: #007bff;
+    color: white;
+    width: 40px; /* Set width */
+    height: 40px; /* Set height */
+    border: none;
+    border-radius: 50%; /* Fully rounded corners */
+    display: flex; /* Use flexbox */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-top: 10px;
+}
+
+.plus-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Overlay */
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+
+/* Dialog Box */
+.dialog {
+    background: #ffffff;
+    padding: 40px;
+    padding-bottom: 60px; /* Extra padding for the button */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 60%; /* Increase width */
+    max-width: 90%;
+    position: relative; /* Ensure positioning context for button */
+}
+
+.dialog-enter {
+    opacity: 0;
+    transform: translateY(-30px);
+}
+
+.dialog-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.dialog-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.dialog-exit-active {
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: opacity 300ms, transform 300ms;
+}
+
+/* Button Container */
+.button-container {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Close Button */
+.close-button {
+    background-color: #3f51b5; /* Blue background */
+    color: white; /* White text */
+    padding: 12px 24px; /* Increase padding */
+    border: none; /* No border */
+    border-radius: 20px; /* Fully rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 18px; /* Increase font size */
+    font-weight: 500; /* Font weight */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    outline: none; /* Remove outline */
+    display: inline-block;
+    text-align: center;
+    z-index: 1;
+}
+
+.close-button:hover {
+    background-color: #303f9f; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px; /* Space between options */
+}
+
+.error {
+    color: #e74c3c;
+    font-weight: 500;
+}
+
+.loading {
+    color: #3498db;
+    font-weight: 500;
+}
+
+.dialog-button {
+    margin-right: 20px; /* Add margin to separate from other elements */
+    z-index: 1; /* Ensure the button is above other elements */
+}

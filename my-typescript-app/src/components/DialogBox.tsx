@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ApolloClient, InMemoryCache, gql, ApolloProvider, useQuery, useLazyQuery } from '@apollo/client';
 import { CSSTransition } from 'react-transition-group';
-import '../styles.css';
+import '../css/dialog.css';
 
 interface DialogBoxProps {
   isOpen: boolean;
