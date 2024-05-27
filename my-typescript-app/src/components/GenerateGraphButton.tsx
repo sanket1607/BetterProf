@@ -1,8 +1,9 @@
+// GenerateGraphButton.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { GET_NORMALISED_STUDENT_MEAN } from '../queries';
 import { RadarChart } from './RadarChart';
-import '../styles.css';
+import '../css/graph.css';
 
 interface GenerateGraphButtonProps {
   isEnabled: boolean;
@@ -83,7 +84,7 @@ const GenerateGraphButton: React.FC<GenerateGraphButtonProps> = ({ isEnabled, se
   const keys = populatedGroups.map(group => `Group ${group}`);
 
   return (
-      <div>
+      <div className="graph-container fadeIn">
         <button
             className="generate-graph-button"
             disabled={!isEnabled}
