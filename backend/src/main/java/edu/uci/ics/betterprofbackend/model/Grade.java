@@ -18,6 +18,7 @@ public enum Grade {
     D_Plus("D+"),
     D("D"),
     D_Minus("D-"),
+    F("F"),
     DROPPED("");
 
     private final String letter;
