@@ -9,7 +9,7 @@ public class GradeFlagConvertor implements AttributeConverter<GradeFlag, String>
 
     @Override
     public String convertToDatabaseColumn(GradeFlag gradeFlag) {
-        return gradeFlag.getValue();
+        return gradeFlag.getFlagValue();
     }
 
     @Override
