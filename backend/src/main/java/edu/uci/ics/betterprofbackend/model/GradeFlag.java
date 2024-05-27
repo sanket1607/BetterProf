@@ -11,18 +11,12 @@ public enum GradeFlag {
     private final String flagValue;
 
     public static GradeFlag fromString(String value) {
+        if(value.isBlank()) return CPB;
         for (GradeFlag gradeFlag : GradeFlag.values()) {
             if (gradeFlag.flagValue.equalsIgnoreCase(value)) {
                 return gradeFlag;
             }
         }
         throw new IllegalArgumentException();
-    }
-
-    public GradeFlag fromGrade(Grade grade) {
-        return switch (grade) {
-            case A_Plus, A, A_Minus, B_Plus, B, B_Minus -> GradeFlag.BMA;
-            case C_Plus, C, C_Minus, D_Plus, D, D_Minus, DROPPED -> GradeFlag.CPB;
-        };
     }
 }
