@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS students (
     course VARCHAR(50),
     student_id VARCHAR(80),
     grades VARCHAR(4),
-    grades_flag VARCHAR(3),
+    grades_flag VARCHAR(20),
     gender VARCHAR(6),
     urg_flag VARCHAR(7),
     first_gen BOOLEAN,

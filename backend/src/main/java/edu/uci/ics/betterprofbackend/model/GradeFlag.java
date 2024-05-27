@@ -6,13 +6,13 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum GradeFlag {
-    BMA("BM_"), CPB("CP_");
+    BMA("bm_above"), CPB("cp_below_dropped");
 
-    private final String value;
+    private final String flagValue;
 
     public static GradeFlag fromString(String value) {
         for (GradeFlag gradeFlag : GradeFlag.values()) {
-            if (gradeFlag.value.equalsIgnoreCase(value)) {
+            if (gradeFlag.flagValue.equalsIgnoreCase(value)) {
                 return gradeFlag;
             }
         }
