@@ -1,0 +1,33 @@
+/* Field Key Styles */
+.field-key-container {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin-left: 20px;
+    max-width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.field-key-container h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.field-key-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.field-key-container li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #333;
+}
+
+.field-key-container strong {
+    color: #000;
+}

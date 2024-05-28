@@ -1,0 +1,12 @@
+/* Layout for Radar Chart and Field Key */
+.radar-chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.chart-wrapper {
+    flex: 1;
+    height: 600px;
+}
