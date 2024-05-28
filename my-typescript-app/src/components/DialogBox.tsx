@@ -42,6 +42,12 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
   const dialogRef = useRef<HTMLDivElement | null>(null);
 
   const [selectAllStudents, setSelectAllStudents] = useState<boolean>(false);
+  const [isFirstOpen, setIsFirstOpen] = useState<boolean>(true);
+  const [appliedSelections, setAppliedSelections] = useState<{terms: string[], courses: string[], studentIds: string[]}>({
+    terms: [],
+    courses: [],
+    studentIds: []
+  });
 
   const handleSelectAllStudents = () => {
     if (selectAllStudents) {
@@ -122,6 +128,12 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
   
 
   const handleClose = () => {
+    setIsFirstOpen(false);
+    setAppliedSelections({
+      terms: selectedTerms,
+      courses: selectedCourses,
+      studentIds: selectedStudentIds
+    });
     setTimeout(() => {
       onClose(selectedTerms, selectedCourses, selectedStudentIds, allStudentIds, group);
     }, 300);
@@ -145,15 +157,20 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
   const handleClickOutside = (event: MouseEvent) => {
     if (
       dialogRef.current &&
-      !searchInputRefTerms.current?.contains(event.target as Node) &&
-      !searchInputRefCourses.current?.contains(event.target as Node) &&
-      !searchInputRefStudentIds.current?.contains(event.target as Node)
+      !dialogRef.current.contains(event.target as Node)
     ) {
+      if (isFirstOpen) {
+        setSelectedTerms([]);
+        setSelectedCourses([]);
+        setSelectedStudentIds([]);
+      } else {
+        setSelectedTerms(appliedSelections.terms);
+        setSelectedCourses(appliedSelections.courses);
+        setSelectedStudentIds(appliedSelections.studentIds);
+      }
       setTimeout(() => {
-        setIsTermsDropdownVisible(false);
-        setIsCoursesDropdownVisible(false);
-        setIsStudentIdsDropdownVisible(false);
-      }, 130); // Adjust the timeout duration if needed
+        onClose(selectedTerms, selectedCourses, selectedStudentIds, allStudentIds, group);
+      }, 300);
     }
   };
 
@@ -163,7 +180,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [isFirstOpen, appliedSelections]);
 
   const { loading, error, data } = useQuery(GET_COHORT_TERMS, { skip: !isOpen });
 
@@ -196,6 +213,16 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
   const handleShowStudentIdsDropdown = () => {
     getStudentIds({ variables: { courses: selectedCourses, terms: selectedTerms } });
     setIsStudentIdDropdownVisible(true);
+  };
+
+  const handleReset = () => {
+    setSelectedTerms([]);
+    setSelectedCourses([]);
+    setSelectedStudentIds([]);
+    setSelectAllStudents(false);
+    setSearchQueryTerms('');
+    setSearchQueryCourses('');
+    setSearchQueryStudentIds('');
   };
 
   return (
@@ -242,6 +269,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
             {loading && <p className="loading">Loading terms...</p>}
             {error && <p className="error">Error loading terms</p>}
 
+            <h3>Courses:</h3>
             <button className="plus-button" onClick={handleShowCoursesDropdown}>+</button>
 
             <CSSTransition
@@ -252,7 +280,6 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
             >
               <div className="course-container">
                 <div className="selected-options">
-                  <h3>Courses:</h3>
                   <div className="options-container">
                     {selectedCourses.map((course, index) => (
                       <div key={index} className="selected-option">
@@ -260,7 +287,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
                         <span className="remove-option" onClick={() => handleRemoveCourse(course)}>&#10006;</span>
                       </div>
                     ))}
-                  </div>
+                  </div>  
                 </div>
                 <div className="search-container">
                   <input
@@ -285,6 +312,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
                 {coursesLoading && <p className="loading">Loading courses...</p>}
                 {coursesError && <p className="error">Error loading courses</p>}
 
+                <h3>Student IDs:</h3>
                 <button className="plus-button" onClick={handleShowStudentIdsDropdown}>+</button>
 
                 <CSSTransition
@@ -295,7 +323,6 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
                 >
                   <div className="studentId-container">
                     <div className="selected-options">
-                      <h3>Student IDs:</h3>
                       <h3>
                         <input
                           type="checkbox"
@@ -343,7 +370,8 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
             </CSSTransition>
           </div>
           <div className="button-container">
-            <button className="close-button" onClick={handleClose}>Close</button>
+            <button className="close-button button-margin" onClick={handleClose}>Apply</button>
+            <button className="reset-button button-margin" onClick={handleReset}>Reset</button>
           </div>
         </div>
       </div>
