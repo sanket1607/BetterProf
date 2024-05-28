@@ -1,7 +1,7 @@
 /* Selected Option */
 .selected-option {
-    background-color: #8dfff5; /* Light aqua background */
-    color: #004d40; /* Darker text for better readability */
+    background-color: #3f51b5; /* Light aqua background */
+    color: #ffffff; /* Darker text for better readability */
     padding: 4px 12px; /* Reduced padding for smaller size */
     border-radius: 3px; /* Rounded corners */
     margin-right: 6px; /* Space between options */
@@ -15,9 +15,8 @@
     text-transform: capitalize; /* Capitalize text */
 }
 
-
 .selected-option:hover {
-    background-color: #9ce7df; /* Slightly darker light aqua on hover */
+    background-color: #587df7; /* Slightly darker light aqua on hover */
     transform: translateY(-2px); /* Slight lift on hover */
 }
 
@@ -170,10 +169,17 @@
 
 /* Button Container */
 .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     bottom: 20px;
     width: 100%;
     text-align: center;
+}
+
+.button-margin {
+    margin-left: -40px; /* Adjust the value as needed */
 }
 
 /* Close Button */
@@ -195,6 +201,29 @@
 
 .close-button:hover {
     background-color: #303f9f; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Reset Button */
+.reset-button {
+    background-color: #f44336; /* Red background */
+    color: white; /* White text */
+    padding: 12px 24px; /* Increase padding */
+    border: none; /* No border */
+    border-radius: 20px; /* Fully rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 18px; /* Increase font size */
+    font-weight: 500; /* Font weight */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    outline: none; /* Remove outline */
+    display: inline-block;
+    text-align: center;
+    z-index: 1;
+    margin-left: 10px; /* Add space between buttons */
+}
+
+.reset-button:hover {
+    background-color: #d32f2f; /* Darker red on hover */
     transform: translateY(-2px); /* Slight lift on hover */
 }
 
