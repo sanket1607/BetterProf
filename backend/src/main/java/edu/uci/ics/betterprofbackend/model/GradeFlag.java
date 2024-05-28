@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum GradeFlag {
-    BMA("bm_above"), CPB("cp_below_dropped");
+    BMA("bm_"), CPB("cp_");
 
     private final String flagValue;
 

@@ -17,7 +17,7 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
     @Query("SELECT DISTINCT s.course FROM Student s WHERE s.term IN (:terms)")
     List<String> findDistinctCourseByTermIn(@Param("terms") List<String> terms);
 
-    @Query("SELECT DISTINCT s.studentId FROM Student s WHERE s.term IN (:terms) and s.course IN (:courses)")
+    @Query("SELECT DISTINCT s.studentId FROM Student s WHERE s.term IN (:terms) and s.course IN (:courses) ORDER BY s.studentId")
     List<String> findDistinctStudentIdByTermInAndCourseIn(@Param("terms") List<String> terms, @Param("courses") List<String> courses);
 
     @Query("SELECT s FROM Student s WHERE s.studentId IN (:studentIds)")

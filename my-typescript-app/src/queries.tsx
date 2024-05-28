@@ -19,3 +19,21 @@ export const GET_NORMALISED_STUDENT_MEAN = gql`
     }
   }
 `;
+
+export const GET_COHORT_TERMS = gql`
+  query {
+    getAvailableTerms
+  }
+`;
+
+export const GET_AVAILABLE_COURSES = gql`
+  query GetAvailableCourses($terms: [String!]) {
+    getAvailableCourses(terms: $terms)
+  }
+`;
+
+export const GET_STUDENT_IDS = gql`
+  query GetStudentIds($courses: [String!], $terms: [String!]) {
+    getStudentIds(courses: $courses, terms: $terms)
+  }
+`;
