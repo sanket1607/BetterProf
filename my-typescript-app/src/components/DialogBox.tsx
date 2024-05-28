@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ApolloClient, InMemoryCache, gql, ApolloProvider, useQuery, useLazyQuery } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, useLazyQuery } from '@apollo/client';
 import { CSSTransition } from 'react-transition-group';
 import '../css/dialog.css';
+import { GET_COHORT_TERMS, GET_AVAILABLE_COURSES, GET_STUDENT_IDS } from '../queries';
 
 interface DialogBoxProps {
   isOpen: boolean;
-  onClose: (selectedOptions: string[], selectedCourses: string[], selectedStudentIds: string[], group: number) => void;
+  onClose: (selectedOptions: string[], selectedCourses: string[], selectedStudentIds: string[], allStudentIds: string[], group: number) => void;
   group: number;
 }
 
@@ -13,24 +14,6 @@ const client = new ApolloClient({
   uri: 'http://localhost:8010/proxy/better-prof/graphql',
   cache: new InMemoryCache()
 });
-
-const GET_COHORT_TERMS = gql`
-  query {
-    getAvailableTerms
-  }
-`;
-
-const GET_AVAILABLE_COURSES = gql`
-  query GetAvailableCourses($terms: [String!]) {
-    getAvailableCourses(terms: $terms)
-  }
-`;
-
-const GET_STUDENT_IDS = gql`
-  query GetStudentIds($courses: [String!], $terms: [String!]) {
-    getStudentIds(courses: $courses, terms: $terms)
-  }
-`;
 
 const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
   const [selectedTerms, setSelectedTerms] = useState<string[]>([]);
@@ -57,6 +40,17 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
   const searchInputRefCourses = useRef<HTMLInputElement | null>(null);
   const searchInputRefStudentIds = useRef<HTMLInputElement | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
+
+  const [selectAllStudents, setSelectAllStudents] = useState<boolean>(false);
+
+  const handleSelectAllStudents = () => {
+    if (selectAllStudents) {
+      setSelectedStudentIds([]);
+    } else {
+      setSelectedStudentIds(allStudentIds);
+    }
+    setSelectAllStudents(!selectAllStudents);
+  };
 
   const handleRemoveTerm = (term: string) => {
     setSelectedTerms(selectedTerms.filter((item) => item !== term));
@@ -106,6 +100,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
 
     const filtered = allTerms.filter(opt => !selectedTerms.includes(opt) && opt.toLowerCase().includes(searchQueryTerms.toLowerCase()));
     setFilteredTerms(filtered);
+    setIsTermsDropdownVisible(false);
   };
 
   const handleSearchResultClickCourses = (course: string) => {
@@ -114,19 +109,21 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
 
     const filtered = allCourses.filter(opt => !selectedCourses.includes(opt) && opt.toLowerCase().includes(searchQueryCourses.toLowerCase()));
     setFilteredCourses(filtered);
+    setIsCoursesDropdownVisible(false);
   };
 
   const handleSearchResultClickStudentIds = (studentId: string) => {
     setSelectedStudentIds([...selectedStudentIds, studentId]);
     setSearchQueryStudentIds('');
-
+  
     const filtered = allStudentIds.filter(opt => !selectedStudentIds.includes(opt) && opt.toLowerCase().includes(searchQueryStudentIds.toLowerCase()));
     setFilteredStudentIds(filtered);
   };
+  
 
   const handleClose = () => {
     setTimeout(() => {
-      onClose(selectedTerms, selectedCourses, selectedStudentIds, group);
+      onClose(selectedTerms, selectedCourses, selectedStudentIds, allStudentIds, group);
     }, 300);
   };
 
@@ -146,10 +143,17 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dialogRef.current && !dialogRef.current.contains(event.target as Node)) {
-      setIsTermsDropdownVisible(false);
-      setIsCoursesDropdownVisible(false);
-      setIsStudentIdsDropdownVisible(false);
+    if (
+      dialogRef.current &&
+      !searchInputRefTerms.current?.contains(event.target as Node) &&
+      !searchInputRefCourses.current?.contains(event.target as Node) &&
+      !searchInputRefStudentIds.current?.contains(event.target as Node)
+    ) {
+      setTimeout(() => {
+        setIsTermsDropdownVisible(false);
+        setIsCoursesDropdownVisible(false);
+        setIsStudentIdsDropdownVisible(false);
+      }, 130); // Adjust the timeout duration if needed
     }
   };
 
@@ -197,126 +201,147 @@ const DialogBox: React.FC<DialogBoxProps> = ({ isOpen, onClose, group }) => {
   return (
     <CSSTransition
       in={isOpen}
-      timeout={300}
+      timeout={200}
       classNames="dialog"
       unmountOnExit
     >
       <div className="dialog-overlay">
         <div className="dialog" ref={dialogRef}>
-          <div className="selected-options">
-            <h3>Terms for Group {group}:</h3>
-            <div className="options-container">
-              {selectedTerms.map((term, index) => (
-                <div key={index} className="selected-option">
-                  <span className="option-text">{term}</span>
-                  <span className="remove-option" onClick={() => handleRemoveTerm(term)}>&#10006;</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="search-container">
-            <input
-              type="text"
-              id="searchTerm"
-              placeholder="Search terms"
-              value={searchQueryTerms}
-              onChange={handleSearchChangeTerms}
-              onFocus={handleSearchFocusTerms}
-              ref={searchInputRefTerms}
-            />
-            {isTermsDropdownVisible && (
-              <div className="search-results">
-                {filteredTerms.map((term, idx) => (
-                  <div key={idx} className="search-result" onClick={() => handleSearchResultClickTerms(term)}>
-                    {term}
+          <div className="dialog-content">
+            <div className="selected-options">
+              <h3>Terms for Group {group}:</h3>
+              <div className="options-container">
+                {selectedTerms.map((term, index) => (
+                  <div key={index} className="selected-option">
+                    <span className="option-text">{term}</span>
+                    <span className="remove-option" onClick={() => handleRemoveTerm(term)}>&#10006;</span>
                   </div>
                 ))}
               </div>
-            )}
-          </div>
-          {loading && <p className="loading">Loading terms...</p>}
-          {error && <p className="error">Error loading terms</p>}
-
-          <button className="plus-button" onClick={handleShowCoursesDropdown}>+</button>
-
-          {isCourseDropdownVisible && (
-            <div className="course-container">
-              <div className="selected-options">
-                <h3>Courses:</h3>
-                <div className="options-container">
-                  {selectedCourses.map((course, index) => (
-                    <div key={index} className="selected-option">
-                      <span className="option-text">{course}</span>
-                      <span className="remove-option" onClick={() => handleRemoveCourse(course)}>&#10006;</span>
+            </div>
+            <div className="search-container">
+              <input
+                type="text"
+                id="searchTerm"
+                placeholder="Search terms"
+                value={searchQueryTerms}
+                onChange={handleSearchChangeTerms}
+                onFocus={handleSearchFocusTerms}
+                ref={searchInputRefTerms}
+              />
+              {isTermsDropdownVisible && (
+                <div className="search-results">
+                  {filteredTerms.map((term, idx) => (
+                    <div key={idx} className="search-result" onClick={() => handleSearchResultClickTerms(term)}>
+                      {term}
                     </div>
                   ))}
                 </div>
-              </div>
-              <div className="search-container">
-                <input
-                  type="text"
-                  id="searchCourse"
-                  placeholder="Search courses"
-                  value={searchQueryCourses}
-                  onChange={handleSearchChangeCourses}
-                  onFocus={handleSearchFocusCourses}
-                  ref={searchInputRefCourses}
-                />
-                {isCoursesDropdownVisible && (
-                  <div className="search-results">
-                    {filteredCourses.map((course, idx) => (
-                      <div key={idx} className="search-result" onClick={() => handleSearchResultClickCourses(course)}>
-                        {course}
+              )}
+            </div>
+            {loading && <p className="loading">Loading terms...</p>}
+            {error && <p className="error">Error loading terms</p>}
+
+            <button className="plus-button" onClick={handleShowCoursesDropdown}>+</button>
+
+            <CSSTransition
+              in={isCourseDropdownVisible}
+              timeout={600}
+              classNames="course-container"
+              unmountOnExit
+            >
+              <div className="course-container">
+                <div className="selected-options">
+                  <h3>Courses:</h3>
+                  <div className="options-container">
+                    {selectedCourses.map((course, index) => (
+                      <div key={index} className="selected-option">
+                        <span className="option-text">{course}</span>
+                        <span className="remove-option" onClick={() => handleRemoveCourse(course)}>&#10006;</span>
                       </div>
                     ))}
                   </div>
-                )}
-              </div>
-              {coursesLoading && <p className="loading">Loading courses...</p>}
-              {coursesError && <p className="error">Error loading courses</p>}
-
-              <button className="plus-button" onClick={handleShowStudentIdsDropdown}>+</button>
-
-              {isStudentIdDropdownVisible && (
-                <div className="studentId-container">
-                  <div className="selected-options">
-                    <h3>Student IDs:</h3>
-                    <div className="options-container">
-                      {selectedStudentIds.map((studentId, index) => (
-                        <div key={index} className="selected-option">
-                          <span className="option-text">{studentId}</span>
-                          <span className="remove-option" onClick={() => handleRemoveStudentId(studentId)}>&#10006;</span>
+                </div>
+                <div className="search-container">
+                  <input
+                    type="text"
+                    id="searchCourse"
+                    placeholder="Search courses"
+                    value={searchQueryCourses}
+                    onChange={handleSearchChangeCourses}
+                    onFocus={handleSearchFocusCourses}
+                    ref={searchInputRefCourses}
+                  />
+                  {isCoursesDropdownVisible && (
+                    <div className="search-results">
+                      {filteredCourses.map((course, idx) => (
+                        <div key={idx} className="search-result" onClick={() => handleSearchResultClickCourses(course)}>
+                          {course}
                         </div>
                       ))}
                     </div>
-                  </div>
-                  <div className="search-container">
-                    <input
-                      type="text"
-                      id="searchStudentId"
-                      placeholder="Search student IDs"
-                      value={searchQueryStudentIds}
-                      onChange={handleSearchChangeStudentIds}
-                      onFocus={handleSearchFocusStudentIds}
-                      ref={searchInputRefStudentIds}
-                    />
-                    {isStudentIdsDropdownVisible && (
-                      <div className="search-results">
-                        {filteredStudentIds.map((studentId, idx) => (
-                          <div key={idx} className="search-result" onClick={() => handleSearchResultClickStudentIds(studentId)}>
-                            {studentId}
+                  )}
+                </div>
+                {coursesLoading && <p className="loading">Loading courses...</p>}
+                {coursesError && <p className="error">Error loading courses</p>}
+
+                <button className="plus-button" onClick={handleShowStudentIdsDropdown}>+</button>
+
+                <CSSTransition
+                  in={isStudentIdDropdownVisible}
+                  timeout={600}
+                  classNames="studentId-container"
+                  unmountOnExit
+                >
+                  <div className="studentId-container">
+                    <div className="selected-options">
+                      <h3>Student IDs:</h3>
+                      <h3>
+                        <input
+                          type="checkbox"
+                          checked={selectAllStudents}
+                          onChange={handleSelectAllStudents}
+                        />{' '}
+                        Select all Student IDs
+                      </h3>
+                      <div className="options-container">
+                        {selectedStudentIds.map((studentId, index) => (
+                          <div key={index} className="selected-option">
+                            <span className="option-text">{studentId}</span>
+                            <span className="remove-option" 
+                                onClick={() => handleRemoveStudentId(studentId)}>&#10006;</span>
                           </div>
                         ))}
                       </div>
-                    )}
-                  </div>
-                  {studentIdsLoading && <p className="loading">Loading student IDs...</p>}
-                  {studentIdsError && <p className="error">Error loading student IDs...</p>}
-                </div>
-              )}
-            </div>
-          )}
+                    </div>
+                    <div className="search-container">
+                      <input
+                        type="text"
+                        id="searchStudentId"
+                        placeholder="Search student IDs"
+                        value={searchQueryStudentIds}
+                        onChange={handleSearchChangeStudentIds}
+                        onFocus={handleSearchFocusStudentIds}
+                        ref={searchInputRefStudentIds}
+                      />
+                      {isStudentIdsDropdownVisible && (
+                        <div className="search-results">
+                          {filteredStudentIds.map((studentId, idx) => (
+                            <div key={idx} className="search-result" onClick={() => handleSearchResultClickStudentIds(studentId)}>
+                              {studentId}
+                            </div>
+                          ))}
 
+                        </div>
+                      )}
+                    </div>
+                    {studentIdsLoading && <p className="loading">Loading student IDs...</p>}
+                    {studentIdsError && <p className="error">Error loading student IDs...</p>}
+                  </div>
+                </CSSTransition>
+              </div>
+            </CSSTransition>
+          </div>
           <div className="button-container">
             <button className="close-button" onClick={handleClose}>Close</button>
           </div>

@@ -1,23 +1,23 @@
 /* Selected Option */
 .selected-option {
-    background: linear-gradient(135deg, #ffebcd, #ffd700); /* Gradient background with warm colors */
-    color: #8b4513; /* Brown text */
-    padding: 12px 20px; /* Increased padding for better readability */
-    border: 2px solid #8b4513; /* Border around the option */
-    border-radius: 10px; /* Rounded corners */
-    margin-right: 10px; /* Space between options */
-    margin-bottom: 10px; /* Space between rows */
+    background-color: #8dfff5; /* Light aqua background */
+    color: #004d40; /* Darker text for better readability */
+    padding: 4px 12px; /* Reduced padding for smaller size */
+    border-radius: 3px; /* Rounded corners */
+    margin-right: 6px; /* Space between options */
+    margin-bottom: 6px; /* Space between rows */
     display: inline-block; /* Keep options inline */
-    font-weight: 700; /* Make text bold */
-    font-size: 18px; /* Increase font size */
+    font-weight: 800; /* Slightly reduced font weight */
+    font-size: 18px; /* Reduced font size */
     transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3); /* Add subtle shadow */
     text-align: center; /* Center align text */
     text-transform: capitalize; /* Capitalize text */
 }
 
+
 .selected-option:hover {
-    background: linear-gradient(135deg, #ffd700, #ff8c00); /* Darker gradient on hover */
+    background-color: #9ce7df; /* Slightly darker light aqua on hover */
     transform: translateY(-2px); /* Slight lift on hover */
 }
 
@@ -27,17 +27,16 @@
     margin-bottom: 20px;
 }
 
-
 .remove-option {
-    color: #ff5252; /* Red color for remove icon */
+    color: #ff6f6f; /* Softer red color for remove icon */
     cursor: pointer; /* Pointer cursor */
-    font-size: 20px; /* Increase icon size */
-    margin-left: 12px; /* Space between text and icon */
+    font-size: 18px; /* Reduced icon size */
+    margin-left: 10px; /* Space between text and icon */
     transition: color 0.3s; /* Smooth transition for color */
 }
 
 .remove-option:hover {
-    color: #d32f2f; /* Darker red on hover */
+    color: #ff3f3f; /* Darker red on hover */
 }
 
 /* Search Container */
@@ -46,39 +45,45 @@
     margin-bottom: 30px;
 }
 
-/* Search Results */
+/* Dropdown Container */
 .search-results {
     position: absolute;
-    top: calc(100% + 10px);
+    top: calc(100% + 5px); /* Adjust top position */
     left: 0;
     width: 100%;
-    max-height: 250px;
+    max-height: 200px; /* Set max height for scrolling */
     overflow-y: auto;
     background: #ffffff;
-    border: 1px solid #32cd32;
-    border-top: none;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc; /* Add border */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
     z-index: 1000;
     animation: fadeIn 0.3s ease-in-out;
 }
 
 .search-result {
-    padding: 15px;
-    cursor: pointer;
-    font-size: 18px; /* Increased font size */
-    font-weight: 600; /* Bold text */
-    color: #333;
-    background: #e6f7ff; /* Light pastel blue background */
-    border-bottom: 1px solid #ccc; /* Border between options */
-    transition: background-color 0.3s, padding 0.3s, color 0.3s;
+    padding: 10px; /* Add padding */
+    font-size: 18px; /* Adjust font size */
+    color: #333; /* Text color */
+    background: #fff; /* Background color */
+    border-bottom: 1px solid #eee; /* Bottom border for separation */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .search-result:hover {
-    background-color: #bae7ff; /* Slightly darker blue on hover */
-    padding-left: 20px;
-    color: #0056b3; /* Darker text color on hover */
+    background-color: #007bff; /* Light blue background on hover */
+    color: #ffffff; /* Darker text on hover */
 }
+
+.search-result label {
+    margin-left: 10px; /* Space between checkbox and label */
+}
+
+/* .search-result:hover {
+    background-color: #bae7ff;
+    color: #0056b3;
+} */
 
 /* Plus Button */
 .plus-button {
@@ -92,7 +97,7 @@
     align-items: center; /* Center content vertically */
     justify-content: center; /* Center content horizontally */
     cursor: pointer;
-    font-size: 20px;
+    font-size: 40px;
     transition: background-color 0.3s, transform 0.3s;
     margin-top: 10px;
 }
@@ -116,8 +121,8 @@
     z-index: 1000;
     backdrop-filter: blur(8px);
     animation: fadeIn 0.3s ease-in-out;
+    overflow-y: hidden; /* Prevent the overlay from scrolling */
 }
-
 
 /* Dialog Box */
 .dialog {
@@ -128,7 +133,17 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     width: 60%; /* Increase width */
     max-width: 90%;
+    max-height: 80%; /* Constrain the dialog box height */
+    min-height: 60%;
+    display: flex;
+    flex-direction: column;
     position: relative; /* Ensure positioning context for button */
+}
+
+.dialog-content {
+    overflow-y: auto; /* Enable scrolling within the dialog content */
+    flex-grow: 1; /* Allow the content to take up available space */
+    padding: 20px;
 }
 
 .dialog-enter {
@@ -146,7 +161,6 @@
     opacity: 1;
     transform: translateY(0);
 }
-
 
 .dialog-exit-active {
     opacity: 0;
@@ -187,7 +201,7 @@
 .options-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px; /* Space between options */
+    gap: 8px; /* Reduced space between options */
 }
 
 .error {
@@ -203,4 +217,58 @@
 .dialog-button {
     margin-right: 20px; /* Add margin to separate from other elements */
     z-index: 1; /* Ensure the button is above other elements */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Smooth Transition for Course and Student ID Sections */
+.course-container-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.course-container-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 600ms, transform 600ms;
+}
+
+.course-container-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.course-container-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 600ms, transform 600ms;
+}
+
+.studentId-container-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.studentId-container-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 600ms, transform 600ms;
+}
+
+.studentId-container-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.studentId-container-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 600ms, transform 600ms;
 }

@@ -25,6 +25,11 @@ const App: React.FC = () => {
     2: [],
     3: [],
   });
+  const [allStudentIds, setAllStudentIds] = useState<{ [key: number]: string[] }>({
+    1: [],
+    2: [],
+    3: [],
+  });
 
   const [isGenerateGraphEnabled, setIsGenerateGraphEnabled] = useState<boolean>(false);
 
@@ -32,11 +37,19 @@ const App: React.FC = () => {
     setIsDialogOpen({ ...isDialogOpen, [group]: true });
   };
 
-  const handleDialogClose = (options: string[], courses: string[], studentIds: string[], group: number) => {
+  const handleDialogClose = (options: string[], courses: string[], studentIds: string[], allIds: string[], group: number) => {
     setSelectedOptions({ ...selectedOptions, [group]: options });
     setSelectedCourses({ ...selectedCourses, [group]: courses });
     setSelectedStudentIds({ ...selectedStudentIds, [group]: studentIds });
+    setAllStudentIds({ ...allStudentIds, [group]: allIds });
     setIsDialogOpen({ ...isDialogOpen, [group]: false });
+  };
+
+  const isAllSelected = (group: number) => {
+    return (
+      allStudentIds[group].length > 0 &&
+      selectedStudentIds[group].length === allStudentIds[group].length
+    );
   };
 
   useEffect(() => {
@@ -58,7 +71,7 @@ const App: React.FC = () => {
           </button>
           <DialogBox
             isOpen={isDialogOpen[group]}
-            onClose={(options: string[], courses: string[], studentIds: string[]) => handleDialogClose(options, courses, studentIds, group)}
+            onClose={(options: string[], courses: string[], studentIds: string[], allIds: string[]) => handleDialogClose(options, courses, studentIds, allIds, group)}
             group={group}
           />
           <div className="selection-container">
@@ -76,9 +89,13 @@ const App: React.FC = () => {
             </ul>
             <h4>Student IDs:</h4>
             <ul>
-              {selectedStudentIds[group].map((studentId, index) => (
-                <li key={index}>{studentId}</li>
-              ))}
+              {isAllSelected(group) ? (
+                <li>All selected</li>
+              ) : (
+                selectedStudentIds[group].map((studentId, index) => (
+                  <li key={index}>{studentId}</li>
+                ))
+              )}
             </ul>
           </div>
         </div>
