@@ -84,7 +84,7 @@ const GenerateGraphButton: React.FC<GenerateGraphButtonProps> = ({ isEnabled, se
   const keys = populatedGroups.map(group => `Group ${group}`);
 
   return (
-      <div className="graph-container fadeIn">
+      <div>
         <button
             className="generate-graph-button"
             disabled={!isEnabled}

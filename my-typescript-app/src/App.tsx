@@ -58,53 +58,57 @@ const App: React.FC = () => {
   }, [selectedOptions]);
 
   return (
-    <div>
-      <div className="header">
-        <img src={uciLogo} alt="UCI Logo" className="uci-logo" />
-        <h1>BetterProf</h1>
-      </div>
-      {[1, 2, 3].map((group) => (
-        <div key={group} className="group-container">
-          <h3>Group {group}</h3>
-          <button onClick={() => handleDialogOpen(group)} className="configure-button">
-            Configure
-          </button>
-          <DialogBox
-            isOpen={isDialogOpen[group]}
-            onClose={(options: string[], courses: string[], studentIds: string[], allIds: string[]) => handleDialogClose(options, courses, studentIds, allIds, group)}
-            group={group}
-          />
-          <div className="selection-container">
-            <h4>Terms:</h4>
-            <ul>
-              {selectedOptions[group].map((option, index) => (
-                <li key={index}>{option}</li>
-              ))}
-            </ul>
-            <h4>Courses:</h4>
-            <ul>
-              {selectedCourses[group].map((course, index) => (
-                <li key={index}>{course}</li>
-              ))}
-            </ul>
-            <h4>Student IDs:</h4>
-            <ul>
-              {isAllSelected(group) ? (
-                <li>All selected</li>
-              ) : (
-                selectedStudentIds[group].map((studentId, index) => (
-                  <li key={index}>{studentId}</li>
-                ))
-              )}
-            </ul>
-          </div>
+      <div>
+        <div className="header">
+          <img src={uciLogo} alt="UCI Logo" className="uci-logo"/>
+          <h1>BetterProf</h1>
         </div>
-      ))}
-      <GenerateGraphButton
-        isEnabled={isGenerateGraphEnabled}
-        selectedStudentIds={selectedStudentIds} // Pass selectedStudentIds to GenerateGraphButton
-      />
-    </div>
+        <div className="single-container">
+          {[1, 2, 3].map((group) => (
+              <div key={group} className="group-container">
+                <h3>Group {group}</h3>
+                <button onClick={() => handleDialogOpen(group)} className="configure-button">
+                  Configure
+                </button>
+                <DialogBox
+                    isOpen={isDialogOpen[group]}
+                    onClose={(options: string[], courses: string[], studentIds: string[], allIds: string[]) => handleDialogClose(options, courses, studentIds, allIds, group)}
+                    group={group}
+                />
+                <div className="selection-container">
+                  <h4>Terms:</h4>
+                  <ul>
+                    {selectedOptions[group].map((option, index) => (
+                        <li key={index}>{option}</li>
+                    ))}
+                  </ul>
+                  <h4>Courses:</h4>
+                  <ul>
+                    {selectedCourses[group].map((course, index) => (
+                        <li key={index}>{course}</li>
+                    ))}
+                  </ul>
+                  <h4>Student IDs:</h4>
+                  <ul>
+                    {isAllSelected(group) ? (
+                        <li>All selected</li>
+                    ) : (
+                        selectedStudentIds[group].map((studentId, index) => (
+                            <li key={index}>{studentId}</li>
+                        ))
+                    )}
+                  </ul>
+                </div>
+              </div>
+          ))}
+        </div>
+        <div className="graph-container">
+          <GenerateGraphButton
+              isEnabled={isGenerateGraphEnabled}
+              selectedStudentIds={selectedStudentIds}
+          />
+        </div>
+      </div>
   );
 };
 

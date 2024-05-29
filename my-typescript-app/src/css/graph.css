@@ -22,7 +22,7 @@
 }
 
 /* Graph Container */
-.graph-container {
+.graph-container { /* Add space between groups */
     margin-bottom: 20px; /* Add space between groups */
     border: 1px solid #ccc;
     border-radius: 10px;
